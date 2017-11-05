@@ -52,7 +52,31 @@ dashboardPage(
                 collapsible = TRUE, background = "fuchsia",
                 plotOutput("pcPlot", height = 800)
               )
+      ),
+      tabItem(tabName = "photos",
+              box(
+                width = 12,
+                tags$style(type = "text/css", "
+
+                            .irs-slider:hover {
+                                background: url('https://img4.hostingpics.net/pics/601923happy.png');
+                            }
+
+                            .irs-slider {
+                                        width: 32px;
+                                        height: 32px;
+                                        border: 0;
+                                        background: url('https://img4.hostingpics.net/pics/943843smile.png');
+                                        box-shadow: 0px 0px 0px rgba(0,0,0,0);
+                                        cursor: pointer;
+                                        
+                            }
+                "),
+                
+                sliderInput("sliderphoto", "Baby age in days : ", min = 0, max = 107, value = 1)
+              )
       )
+      
     )
   )
 )
