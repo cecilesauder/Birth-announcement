@@ -25,7 +25,6 @@ dashboardPage(
               valueBox("50 cm", "height", icon = icon("arrows-v"), color = "yellow", width = 3),
               box(
                 width = 12,
-                height = 1100,
                 imageOutput("baImg")
               )
       ),
@@ -59,14 +58,14 @@ dashboardPage(
                 tags$style(type = "text/css", "
 
                             .irs-slider:hover {
-                                background: url('https://img4.hostingpics.net/pics/601923happy.png');
+                                background: url('happy.png');
                             }
 
                             .irs-slider {
                                         width: 32px;
                                         height: 32px;
                                         border: 0;
-                                        background: url('https://img4.hostingpics.net/pics/943843smile.png');
+                                        background: url('smile.png');
                                         box-shadow: 0px 0px 0px rgba(0,0,0,0);
                                         cursor: pointer;
                                         

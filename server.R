@@ -72,7 +72,7 @@ courbe <- function(varname){
 shinyServer(function(input, output) {
   
   output$baImg <- renderImage({
-    list(src = "./images/baImg.jpeg")
+    list(src = "./www/baImg.jpeg")
   }, deleteFile = FALSE)
   
   output$poidsPlot <- renderPlot({
