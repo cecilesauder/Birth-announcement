@@ -73,6 +73,10 @@ dashboardPage(
                 "),
                 
                 sliderInput("sliderphoto", "Baby age in days : ", min = 0, max = 107, value = 1)
+              ),
+              box(
+                width = 12,
+                imageOutput("image")
               )
       )
       

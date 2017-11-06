@@ -87,5 +87,7 @@ shinyServer(function(input, output) {
     courbe("head_circumference")
   })
 
-  
+  output$image <- renderImage({
+    list(src = paste0("./www/photos/", input$sliderphoto, ".jpg" ))
+  }, deleteFile = FALSE)
 })
