@@ -90,3 +90,6 @@ scale_color_gradient_mirror <- function (..., colors ,
                    na.value = na.value, guide = guide, 
                    ..., rescaler = ggplot2:::mid_rescaler(mid = midpoint))
 }
+
+
+df <- data.frame( date = seq( ymd("2017-07-12"), today() , by = "day"), age = 0:118)
