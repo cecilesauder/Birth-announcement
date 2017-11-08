@@ -88,6 +88,7 @@ shinyServer(function(input, output) {
   })
 
   output$image <- renderImage({
-    list(src = paste0("./www/photos/", input$sliderphoto, ".jpg" ))
+    list(src = paste0("./www/photos/", input$sliderphoto, ".jpg" ),
+         width = 1500)
   }, deleteFile = FALSE)
 })

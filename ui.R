@@ -72,7 +72,9 @@ dashboardPage(
                             }
                 "),
                 
-                sliderInput("sliderphoto", "Baby age in days : ", min = 0, max = 107, value = 1)
+                sliderInput("sliderphoto", "Baby age in days : ", min = 0, max = 107, value = 0,
+                            animate =
+                              animationOptions(interval = 4000, loop = TRUE))
               ),
               box(
                 width = 12,
