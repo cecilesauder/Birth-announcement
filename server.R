@@ -51,6 +51,10 @@ courbe <- function(varname){
     select_("Age","percentile", varname) %>%
     filter(Age < 111)
   
+  lexie <- lexie %>%
+    select_("day", varname) %>%
+    na.omit()
+  
   #ggplot
   tab %>%
     ggplot( aes_string( "Age", varname, color = "percentile", group = "percentile" )) +
@@ -63,9 +67,9 @@ courbe <- function(varname){
     ) +
     guides(colour=FALSE) +
     scale_color_gradient_mirror(midpoint=50, colors = c("violetred4", "violetred3", "violetred1") ) +
-    geom_line(data=lexie, na.rm = TRUE, mapping = aes_string( x = "day", y = varname, col = NULL, group = NULL), size = 1) +
+    geom_line(data=lexie , mapping = aes_string( x = "day", y = varname, col = NULL, group = NULL), size = 1) +
     add_emoji(emoji="1f476") +
-    geom_point(data=lexie, na.rm = TRUE, col= "violetred4", size=2, mapping = aes_string( x = "day", y = varname, col = NULL, group = NULL))
+    geom_point(data=lexie, col= "violetred4", size=2, mapping = aes_string( x = "day", y = varname, col = NULL, group = NULL))
   
 }
 
@@ -76,19 +80,27 @@ shinyServer(function(input, output) {
   }, deleteFile = FALSE)
   
   output$poidsPlot <- renderPlot({
-    courbe("weight")
+    courbe("weight") + ylab("Poids (kg)")
   })
   
   output$taillePlot <- renderPlot({
-    courbe("height")    
+    courbe("height") + ylab("Taille (cm)")
   })
   
   output$pcPlot <- renderPlot({
-    courbe("head_circumference")
+    courbe("head_circumference") + ylab("Périmètre cranien (cm)")
   })
 
-  output$image <- renderImage({
-    list(src = paste0("./www/photos/", input$sliderphoto, ".jpg" ),
-         width = 1500)
-  }, deleteFile = FALSE)
+  # output$image <- renderImage({
+  #   list(src = paste0("./www/photos/", input$sliderphoto, ".jpg" ),
+  #        width = 1500)
+  # }, deleteFile = FALSE)
+  output$image <- renderUI({
+    img_name <- paste0("photos/", input$sliderphoto, ".jpg")
+    if(file.exists(file.path("www", img_name))){
+      img(src = img_name,
+          width = "100%")
+    }
+
+  })
 })

@@ -3,6 +3,7 @@ library(shiny)
 library(shinydashboard)
 
 dashboardPage(
+
   skin = "purple",
   dashboardHeader(title = "Hello World ! "),
   dashboardSidebar(
@@ -17,16 +18,16 @@ dashboardPage(
     )
   ),
   dashboardBody(
+    tags$head(
+      tags$link(rel = "stylesheet", type = "text/css", href = "style.css")
+    ),
     tabItems(
       tabItem(tabName = "bebe",
               valueBox("Lexie", "SAUDER FRANCOIS", icon = icon("venus"), color = "fuchsia", width = 3),
               valueBox("2017-07-12", "17:16", icon = icon("birthday-cake"), width = 3),
               valueBox("3.460 kg" , "weight", icon = icon("balance-scale"), color = "maroon", width = 3),
               valueBox("50 cm", "height", icon = icon("arrows-v"), color = "yellow", width = 3),
-              box(
-                width = 12,
-                imageOutput("baImg")
-              )
+              imageOutput("baImg")
       ),
       tabItem(tabName = "poids",
               box(
@@ -55,30 +56,13 @@ dashboardPage(
       tabItem(tabName = "photos",
               box(
                 width = 12,
-                tags$style(type = "text/css", "
-
-                            .irs-slider:hover {
-                                background: url('happy.png');
-                            }
-
-                            .irs-slider {
-                                        width: 32px;
-                                        height: 32px;
-                                        border: 0;
-                                        background: url('smile.png');
-                                        box-shadow: 0px 0px 0px rgba(0,0,0,0);
-                                        cursor: pointer;
-                                        
-                            }
-                "),
-                
                 sliderInput("sliderphoto", "Baby age in days : ", min = 0, max = 107, value = 0,
-                            animate =
-                              animationOptions(interval = 4000, loop = TRUE))
+                            animate =  animationOptions(interval = 4000, loop = TRUE))
               ),
               box(
                 width = 12,
-                imageOutput("image")
+                #imageOutput("image")
+                uiOutput("image")
               )
       )
       
