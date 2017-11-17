@@ -23,7 +23,8 @@ lexie <- tribble( ~date, ~weight, ~height, ~head_circumference,
                   "2017-09-05", 4.530, NA, NA,
                   "2017-09-14", 4.750, 57, NA,
                   "2017-10-12", 5.060, 59.5, 40,
-                  "2017-10-27", 5.520, 61, NA
+                  "2017-10-27", 5.520, 61, NA,
+                  "2017-11-13", 5.980, 62, 41.5
 ) %>%
   mutate(
     date = ymd(date),
@@ -100,6 +101,8 @@ shinyServer(function(input, output) {
     if(file.exists(file.path("www", img_name))){
       img(src = img_name,
           width = "100%")
+    }else{
+      strong("pas de photo aujourd'hui")
     }
 
   })

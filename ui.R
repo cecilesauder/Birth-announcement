@@ -56,7 +56,7 @@ dashboardPage(
       tabItem(tabName = "photos",
               box(
                 width = 12,
-                sliderInput("sliderphoto", "Baby age in days : ", min = 0, max = 107, value = 0,
+                sliderInput("sliderphoto", "Age en jours : ", min = 0, max = 124, value = 0,
                             animate =  animationOptions(interval = 4000, loop = TRUE))
               ),
               box(
