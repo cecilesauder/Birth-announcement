@@ -57,7 +57,8 @@ dashboardPage(
               box(
                 width = 12,
                 sliderInput("sliderphoto", "Age en jours : ", min = 0, max = 124, value = 0,
-                            animate =  animationOptions(interval = 4000, loop = TRUE))
+                            animate =  animationOptions(interval = 4000, loop = TRUE, 
+                                                        playButton = "PLAY", pauseButton = "PAUSE"))
               ),
               box(
                 width = 12,

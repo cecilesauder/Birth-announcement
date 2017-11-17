@@ -5,6 +5,6 @@ account: cecilesauder
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 231815
-bundleId: 1070472
+bundleId: 1080219
 url: https://cecilesauder.shinyapps.io/birth-announcement/
-when: 1510425769.23863
+when: 1510884803.92786

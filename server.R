@@ -6,6 +6,8 @@ library(emoGG)
 #devtools::install_github("ThinkR-open/who")
 library(who)
 library(scales)
+library(png)
+library(grid)
 
 
 # Lexie data 
@@ -45,31 +47,36 @@ scale_color_gradient_mirror <- function (..., colors ,
 
 # function to plot different curves
 courbe <- function(varname){
-  
+  maxDay <- max(lexie[["day"]])
   # tbl for ggplot
   tab <- standards %>%
     filter(sex == "F", percentile %in% c(3, 25, 50, 75, 97)) %>%
     select_("Age","percentile", varname) %>%
-    filter(Age < 111)
+    filter(Age < maxDay )
   
   lexie <- lexie %>%
     select_("day", varname) %>%
     na.omit()
   
   #ggplot
+  
+  img <- readPNG("./www/bg.png") 
+  
+  g <- rasterGrob(img, interpolate=TRUE) 
+  
   tab %>%
     ggplot( aes_string( "Age", varname, color = "percentile", group = "percentile" )) +
     geom_line(linetype = 2) + 
     theme_light() +
     geom_text(
-      data = filter(tab, Age == 110),
+      data = filter(tab, Age == maxDay - 1),
       mapping  = aes_string( x = "Age + 3" , varname, label = "percentile", col = NULL ), 
       size = 3
     ) +
     guides(colour=FALSE) +
     scale_color_gradient_mirror(midpoint=50, colors = c("violetred4", "violetred3", "violetred1") ) +
     geom_line(data=lexie , mapping = aes_string( x = "day", y = varname, col = NULL, group = NULL), size = 1) +
-    add_emoji(emoji="1f476") +
+    annotation_custom(g, xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf) +
     geom_point(data=lexie, col= "violetred4", size=2, mapping = aes_string( x = "day", y = varname, col = NULL, group = NULL))
   
 }
