@@ -34,7 +34,12 @@ dashboardPage(
                 width = 12,
                 title = "Courbe du poids (kg)",  solidHeader = TRUE,
                 collapsible = TRUE, background = "maroon",
-                plotOutput("poidsPlot", height = 800)
+                valueBoxOutput("poidsBox"),
+                plotOutput("poidsPlot", height = 800, 
+                           hover = hoverOpts(
+                             id = "plot_hover"
+                           )
+                           )
               )
       ),
       tabItem(tabName = "taille",

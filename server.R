@@ -1,8 +1,7 @@
 library(shiny)
+#install.packages("tidyverse")
 library(tidyverse)
 library(lubridate)
-#devtools::install_github("dill/emoGG")
-library(emoGG)
 #devtools::install_github("ThinkR-open/who")
 library(who)
 library(scales)
@@ -60,8 +59,8 @@ courbe <- function(varname){
   
   #ggplot
   
-  img <- readPNG("./www/bg.png") 
-  
+  #pour l'image de fond
+  img <- readPNG("./www/bg.png")
   g <- rasterGrob(img, interpolate=TRUE) 
   
   tab %>%
@@ -86,6 +85,20 @@ shinyServer(function(input, output) {
   output$baImg <- renderImage({
     list(src = "./www/baImg.jpeg")
   }, deleteFile = FALSE)
+  
+  output$poidsBox <- renderValueBox({
+    valueBox(
+      input$plot_hover, "poids :"
+    )
+  })
+  
+  output$tailleBox <- renderValueBox({
+    
+  })
+  
+  output$pcBox <- renderValueBox({
+    
+  })
   
   output$poidsPlot <- renderPlot({
     courbe("weight") + ylab("Poids (kg)")

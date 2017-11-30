@@ -11,7 +11,10 @@ library(rsconnect)
 rsconnect::setAccountInfo(name='cecilesauder', token='557317F15D5B138698A64DD8DA2FC6E6', secret='lWG2AsOatUUJW1FRiwxc3EYvFCqE36mHViyuMQXV')
 deployApp()
 
+install.packages("plotly")
+library(plotly)
 
+# Lexie data 
 lexie <- tribble( ~date, ~weight, ~height, ~head_circumference,
                   "2017-07-12", 3.460, 50, 34, 
                   "2017-07-13", 3.200, NA, NA,
@@ -31,52 +34,56 @@ lexie <- tribble( ~date, ~weight, ~height, ~head_circumference,
 ) %>%
   mutate(
     date = ymd(date),
-    jour = as.numeric(date - min(date)),
-    semaine = jour/7
+    day = as.numeric(date - min(date)),
+    week = day/7
   )
 
-ggplot( lexie, aes( x = date, y = weight)) +
-  geom_line() +
-  
-  scale_x_date(
-    breaks = seq(min(lexie$date), max(lexie$date), by="day"),
-    labels = paste("S", seq(0,max(lexie$date) - min(lexie$date)))
-  ) +
-  scale_y_continuous(
-    breaks = seq(3.1,6, by = .1)
-  )
 
+# function to plot different curves
 courbe <- function(varname){
-  
+  maxDay <- max(lexie[["day"]])
   # tbl for ggplot
   tab <- standards %>%
     filter(sex == "F", percentile %in% c(3, 25, 50, 75, 97)) %>%
     select_("Age","percentile", varname) %>%
-    filter(Age < 111)
+    filter(Age < maxDay )
+  
+  lexie <- lexie %>%
+    select_("day", varname) %>%
+    na.omit()
   
   #ggplot
+  
+  img <- readPNG("./www/bg.png") 
+  
+  g <- rasterGrob(img, interpolate=TRUE) 
+  
   tab %>%
     ggplot( aes_string( "Age", varname, color = "percentile", group = "percentile" )) +
     geom_line(linetype = 2) + 
     theme_light() +
     geom_text(
-      data = filter(tab, Age == 110),
+      data = filter(tab, Age == maxDay - 1),
       mapping  = aes_string( x = "Age + 3" , varname, label = "percentile", col = NULL ), 
       size = 3
     ) +
     guides(colour=FALSE) +
     scale_color_gradient_mirror(midpoint=50, colors = c("violetred4", "violetred3", "violetred1") ) +
-    geom_line(data=lexie, na.rm = TRUE, mapping = aes_string( x = "jour", y = varname, col = NULL, group = NULL), size = 1) +
-    add_emoji(emoji="1f476") +
-    geom_point(data=lexie, na.rm = TRUE, col= "violetred4", size=2, mapping = aes_string( x = "jour", y = varname, col = NULL, group = NULL))
+    geom_line(data=lexie , mapping = aes_string( x = "day", y = varname, col = NULL, group = NULL), size = 1) +
+  #  annotation_custom(g, xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf) +
+    geom_point(data=lexie, col= "violetred4", size=2, mapping = aes_string( x = "day", y = varname, col = NULL, group = NULL))
   
 }
-courbe("weight")
+
+p <- courbe("weight")
+p
+ggplotly(p)
 courbe("height")
 courbe("head_circumference")
 
-  
-  
+gp <- ggplot(data = iris, aes(x = Sepal.Length, y = Sepal.Width)) + geom_point()
+ggplotly(gp)
+
 #code romain
 
 library(tidyverse)
